@@ -24,5 +24,28 @@
         "risk_level": "HIGH",
         "risk_score": 64,
         "coordination_score": 0.696
+    },
+    {
+        "timestamp": "2026-04-26 11:02:18.999093",
+        "cluster_id": "cluster_1",
+        "accounts": [
+            "bot_1",
+            "bot_3",
+            "bot_2"
+        ],
+        "risk_level": "HIGH",
+        "risk_score": 66,
+        "coordination_score": 0.746
+    },
+    {
+        "timestamp": "2026-04-26 11:12:51.715077",
+        "cluster_id": "cluster_1",
+        "accounts": [
+            "bot_1",
+            "bot_2"
+        ],
+        "risk_level": "MEDIUM",
+        "risk_score": 43,
+        "coordination_score": 0.619
     }
 ]
