@@ -7,92 +7,81 @@ def calculate_risk_score(
 
     for cluster in clusters:
 
-        cluster_accounts = set(
-            cluster["accounts"]
-        )
-
-        coordinated_pairs = 0
-
-        for item in timing_analysis:
-
-            if (
-
-                item["timing_coordinated"]
-
-                and
-
-                item["post_1"]
-                in cluster_accounts
-
-                and
-
-                item["post_2"]
-                in cluster_accounts
-            ):
-
-                coordinated_pairs += 1
-
-        account_count = (
-            cluster["account_count"]
-        )
-
-        avg_score = (
+        coordination = (
             cluster[
                 "average_coordination_score"
             ]
         )
 
-        connection_count = len(
-            cluster["connections"]
+        accounts = (
+            cluster[
+                "account_count"
+            ]
         )
 
-        risk_score = 0
+        timing_hits = 0
 
-        # semantic coordination
-        risk_score += (
-            avg_score * 35
+        for event in timing_analysis:
+
+            if (
+                event[
+                    "timing_coordinated"
+                ]
+            ):
+
+                if (
+                    event["post_1"]
+                    in cluster["accounts"]
+
+                    and
+
+                    event["post_2"]
+                    in cluster["accounts"]
+                ):
+
+                    timing_hits += 1
+
+        score = 0
+
+        score += int(
+            coordination * 40
         )
 
-        # network size
-        risk_score += min(
-            account_count * 6,
-            25
+        score += (
+            accounts * 8
         )
 
-        # timing synchronization
-        risk_score += min(
-            coordinated_pairs * 4,
-            20
+        score += (
+            timing_hits * 10
         )
 
-        # graph density
-        density = (
-            connection_count
-            /
-            max(
-                account_count,
-                1
-            )
-        )
+        if accounts >= 5:
 
-        risk_score += min(
-            density * 10,
-            20
-        )
+            score += 20
 
-        risk_score = round(
-            min(risk_score, 100)
-        )
+        if coordination >= 0.8:
 
-        if risk_score >= 75:
+            score += 15
+
+        score = min(score, 100)
+
+        if (
+            accounts < 3
+            and
+            coordination < 0.75
+        ):
+
+            level = "LOW"
+
+        elif score >= 80:
 
             level = "CRITICAL"
 
-        elif risk_score >= 55:
+        elif score >= 60:
 
             level = "HIGH"
 
-        elif risk_score >= 35:
+        elif score >= 40:
 
             level = "MEDIUM"
 
@@ -106,7 +95,7 @@ def calculate_risk_score(
                 cluster["cluster_id"],
 
             "risk_score":
-                risk_score,
+                score,
 
             "risk_level":
                 level
