@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# FastAPI / Uvicorn
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Cache / temp
+.cache/
+.tmp/
+temp/
+tmp/
+
+# Test / coverage
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# Data (IMPORTANT for your project)
+datasets/history.json
+datasets/*.json
+
+# Vector DB / embeddings cache
+vector_db/
+*.faiss
+*.pkl
+
+# Logs folder
+logs/
+*.log
+
+# Build / dist
+build/
+dist/
+*.egg-info/
+
+# Docker
+docker-compose.override.yml
+
+# Node (for frontend if same repo later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

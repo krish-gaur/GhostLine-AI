@@ -1,0 +1,28 @@
+[
+    {
+        "timestamp": "2026-04-24 17:23:03.116146",
+        "cluster_id": "cluster_1",
+        "accounts": [
+            "bot_4",
+            "bot_5",
+            "bot_2",
+            "bot_1",
+            "bot_3"
+        ],
+        "risk_level": "CRITICAL",
+        "risk_score": 88,
+        "coordination_score": 0.657
+    },
+    {
+        "timestamp": "2026-04-24 17:23:03.116171",
+        "cluster_id": "cluster_2",
+        "accounts": [
+            "bot_8",
+            "bot_6",
+            "bot_7"
+        ],
+        "risk_level": "HIGH",
+        "risk_score": 64,
+        "coordination_score": 0.696
+    }
+]
