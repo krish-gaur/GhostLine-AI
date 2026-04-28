@@ -49,6 +49,7 @@
         "coordination_score": 0.619
     },
     {
+<<<<<<< HEAD
         "timestamp": "2026-04-28 06:33:01.501962",
         "cluster_id": "cluster_1",
         "accounts": [
@@ -56,6 +57,15 @@
             "beta_node",
             "gamma_node",
             "delta_node"
+=======
+        "timestamp": "2026-04-28 08:14:08.959208",
+        "cluster_id": "cluster_1",
+        "accounts": [
+            "beta_node",
+            "delta_node",
+            "gamma_node",
+            "alpha_node"
+>>>>>>> 5d4291b0925525c77ad2402b5d6a55c00b76e466
         ],
         "risk_level": "CRITICAL",
         "risk_score": 100,

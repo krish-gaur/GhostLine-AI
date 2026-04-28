@@ -96,9 +96,7 @@ export default function UseCases() {
               <button className="px-7 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-xl text-black font-semibold text-sm hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300">
                 Get Started Free
               </button>
-              <button className="px-7 py-3 border border-gray-700 rounded-xl text-white font-semibold text-sm hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all duration-300">
-                View Docs
-              </button>
+              
             </div>
           </div>
         </div>

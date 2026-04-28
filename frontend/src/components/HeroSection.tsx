@@ -403,7 +403,7 @@ export default function HeroSection() {
             className="flex flex-col sm:flex-row gap-4 mb-12"
             style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 1s ease, transform 1s ease' }}
           >
-            <button
+            <button  onClick={() => window.open("/detect", "_blank", "noopener,noreferrer")}
               className="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-xl text-black
                          font-semibold text-lg flex items-center justify-center gap-2
                          hover:shadow-2xl hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105"
@@ -412,6 +412,7 @@ export default function HeroSection() {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
+         
               className="px-8 py-4 border border-gray-700 rounded-xl text-white font-semibold text-lg
                          hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all duration-300"
             >
@@ -427,7 +428,7 @@ export default function HeroSection() {
             style={{ opacity: 0, transform: 'scale(0.9)', transition: 'opacity 0.8s ease, transform 0.8s ease' }}
           >
             {[
-              { value: '99.2%', label: 'Detection Rate' },
+              { value: '89.2%', label: 'Detection Rate' },
               { value: '<50ms', label: 'Response Time'  },
               { value: '24/7',  label: 'Monitoring'     },
             ].map(({ value, label }) => (
