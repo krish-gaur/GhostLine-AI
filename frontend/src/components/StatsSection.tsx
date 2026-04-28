@@ -11,7 +11,7 @@ interface StatData {
 const stats: StatData[] = [
   { label: 'Threats Detected', value: 142857, suffix: '', color: '#00ffaa' },
   { label: 'Networks Mapped',  value: 3241,   suffix: '', color: '#8b5cf6' },
-  { label: 'Accuracy Rate',    value: 99.2,   suffix: '%', color: '#3b82f6' },
+  { label: 'Accuracy Rate',    value: 89.2,   suffix: '%', color: '#3b82f6' },
   { label: 'Active Monitors',  value: 24,     suffix: '/7', color: '#ff6b35' }
 ]
 

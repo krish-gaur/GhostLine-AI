@@ -47,5 +47,18 @@
         "risk_level": "MEDIUM",
         "risk_score": 43,
         "coordination_score": 0.619
+    },
+    {
+        "timestamp": "2026-04-28 08:14:08.959208",
+        "cluster_id": "cluster_1",
+        "accounts": [
+            "beta_node",
+            "delta_node",
+            "gamma_node",
+            "alpha_node"
+        ],
+        "risk_level": "CRITICAL",
+        "risk_score": 100,
+        "coordination_score": 0.622
     }
 ]

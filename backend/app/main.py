@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from fastapi.middleware.cors import CORSMiddleware
 from app.api.route.upload import router as upload_router
 from app.api.route.analysis import router as analysis_router
 from app.api.route.websocket import (
@@ -8,7 +8,18 @@ from app.api.route.websocket import (
 
 app = FastAPI(title="GhostLine Backend")
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,   # or ["*"] for testing
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(upload_router)
 app.include_router(analysis_router)
 app.include_router(
@@ -20,3 +31,7 @@ async def root():
     return {
         "message": "GhostLine backend running"
     }
+
+@app.post("/analyze")
+def analyze(data: dict):
+    return {"message": "working"}    

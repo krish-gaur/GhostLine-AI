@@ -43,7 +43,7 @@ export default function Navbar() {
               {label}
             </a>
           ))}
-          <a href="#usecases"
+          <a href="#demo"
              className="px-5 py-2 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full text-black
                         font-semibold text-sm hover:shadow-lg hover:shadow-cyan-500/30
                         transition-all duration-300 hover:scale-105 active:scale-95 whitespace-nowrap">
