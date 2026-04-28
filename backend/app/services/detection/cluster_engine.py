@@ -9,31 +9,54 @@ def build_coordination_clusters(
     graph = nx.Graph()
 
     username_to_post = {
+
         post["username"]: post
+
         for post in processed_posts
+
     }
+
+    # store full metadata in graph edges
 
     for pair in suspicious_pairs:
 
         user_1 = pair["post_1"]
+
         user_2 = pair["post_2"]
 
         score = pair["final_score"]
 
         graph.add_edge(
+
             user_1,
+
             user_2,
-            weight=score
+
+            weight=score,
+
+            severity=pair.get(
+                "severity",
+                "NORMAL"
+            ),
+
+            fraud_score=pair.get(
+                "fraud_score",
+                0
+            )
         )
 
     connected_components = list(
+
         nx.connected_components(graph)
+
     )
 
     clusters = []
 
     for index, component in enumerate(
+
         connected_components
+
     ):
 
         cluster_nodes = list(component)
@@ -52,16 +75,24 @@ def build_coordination_clusters(
 
         for user in cluster_nodes:
 
-            post_data = username_to_post.get(user)
+            post_data = username_to_post.get(
+                user
+            )
 
             if post_data:
 
                 platforms.add(
+
                     post_data["platform"]
+
                 )
 
                 contents.append(
-                    post_data["cleaned_content"]
+
+                    post_data[
+                        "cleaned_content"
+                    ]
+
                 )
 
         for u, v, data in graph.edges(
@@ -69,17 +100,33 @@ def build_coordination_clusters(
         ):
 
             if (
+
                 u in cluster_nodes
+
                 and
+
                 v in cluster_nodes
+
             ):
 
-                platform_u = username_to_post[u]["platform"]
+                platform_u = (
+                    username_to_post[u][
+                        "platform"
+                    ]
+                )
 
-                platform_v = username_to_post[v]["platform"]
+                platform_v = (
+                    username_to_post[v][
+                        "platform"
+                    ]
+                )
 
                 is_cross_platform = (
-                    platform_u != platform_v
+
+                    platform_u
+                    !=
+                    platform_v
+
                 )
 
                 if is_cross_platform:
@@ -88,29 +135,60 @@ def build_coordination_clusters(
 
                 cluster_edges.append({
 
-                    "source": u,
+                    "source":
+                        u,
 
-                    "target": v,
+                    "target":
+                        v,
 
-                    "score": round(
-                        data["weight"],
-                        3
-                    ),
+                    "score":
+                        round(
+                            data["weight"],
+                            3
+                        ),
 
                     "type":
+
                         "cross_platform_coordination"
+
                         if is_cross_platform
-                        else "semantic_coordination"
+
+                        else
+
+                        "semantic_coordination",
+
+                    "severity":
+                        data.get(
+                            "severity",
+                            "NORMAL"
+                        ),
+
+                    "fraud_score":
+                        round(
+                            data.get(
+                                "fraud_score",
+                                0
+                            ),
+                            3
+                        )
                 })
 
-                total_score += data["weight"]
+                total_score += (
+                    data["weight"]
+                )
 
                 edge_count += 1
 
         average_score = (
-            total_score / edge_count
+
+            total_score
+            /
+            edge_count
+
             if edge_count > 0
+
             else 0
+
         )
 
         clusters.append({
@@ -125,7 +203,10 @@ def build_coordination_clusters(
                 len(cluster_nodes),
 
             "average_coordination_score":
-                round(average_score, 3),
+                round(
+                    average_score,
+                    3
+                ),
 
             "platforms":
                 list(platforms),

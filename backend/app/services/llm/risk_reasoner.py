@@ -50,7 +50,7 @@ def generate_risk_explanation(
 
     # semantic coordination
 
-    if coordination_score >= 0.85:
+    if coordination_score >= 0.90:
         evidence.append(
             "Extremely high semantic similarity detected across accounts."
         )
@@ -101,9 +101,38 @@ def generate_risk_explanation(
             "Cross-platform amplification behavior detected."
         )
 
+    # VERY CRITICAL detection
+
+    for connection in cluster.get("connections", []):
+
+        if (
+            connection.get("severity")
+            ==
+            "VERY_CRITICAL"
+        ):
+
+            evidence.append(
+                "Known fraud-pattern similarity matched."
+            )
+
+            break
+
     # risk interpretation
 
-    if risk_level == "CRITICAL":
+    if risk_level == "VERY_CRITICAL":
+
+        assessment = """
+Extremely high-risk coordinated threat detected.
+
+Cluster behavior matches
+fraudulent amplification patterns
+with strong indicators of
+malicious coordinated activity.
+
+Immediate investigation recommended.
+"""
+
+    elif risk_level == "CRITICAL":
 
         assessment = """
 High-confidence coordinated influence operation.

@@ -6,6 +6,10 @@ from app.services.embeddings.embedding_service import (
     generate_embeddings
 )
 
+from app.services.detection.fraud_detection import (
+    detect_fraud_similarity
+)
+
 SEMANTIC_WEIGHT = 0.8
 KEYWORD_WEIGHT = 0.2
 THRESHOLD = 0.55
@@ -46,8 +50,11 @@ def detect_semantic_similarity(posts):
     start_time = time.time()
 
     texts = [
+
         post["cleaned_content"]
+
         for post in posts
+
     ]
 
     embedding_start = time.time()
@@ -85,36 +92,55 @@ embedding_generation_time:
 
         for j in range(i + 1, len(posts)):
 
-            # skip same user
-
             if (
+
                 posts[i]["username"]
+
                 ==
+
                 posts[j]["username"]
+
             ):
+
                 continue
 
             total_comparisons += 1
 
             semantic_score = safe_cosine(
+
                 embeddings[i],
+
                 embeddings[j]
+
             )
 
             keyword_score = keyword_overlap(
+
                 texts[i],
+
                 texts[j]
+
             )
 
             final_score = (
+
                 semantic_score
-                * SEMANTIC_WEIGHT
+                *
+                SEMANTIC_WEIGHT
+
                 +
+
                 keyword_score
-                * KEYWORD_WEIGHT
+                *
+                KEYWORD_WEIGHT
+
             )
 
-            # reject invalid semantic scores
+            fraud_score = detect_fraud_similarity(
+
+                embeddings[i]
+
+            )
 
             if semantic_score < 0:
                 continue
@@ -133,12 +159,21 @@ semantic_score:
 keyword_score:
 {round(keyword_score, 3)}
 
+fraud_score:
+{round(fraud_score, 3)}
+
 final_score:
 {round(final_score, 3)}
 
 --------------------------------------------------
 
 """)
+
+            severity = "NORMAL"
+
+            if fraud_score >= 0.85:
+
+                severity = "VERY_CRITICAL"
 
             if final_score >= THRESHOLD:
 
@@ -157,18 +192,39 @@ final_score:
                         texts[j],
 
                     "semantic_score":
-                        round(semantic_score, 3),
+                        round(
+                            semantic_score,
+                            3
+                        ),
 
                     "keyword_score":
-                        round(keyword_score, 3),
+                        round(
+                            keyword_score,
+                            3
+                        ),
 
                     "final_score":
-                        round(final_score, 3)
+                        round(
+                            final_score,
+                            3
+                        ),
+
+                    "fraud_score":
+                        round(
+                            fraud_score,
+                            3
+                        ),
+
+                    "severity":
+                        severity
                 })
 
     total_time = round(
+
         time.time() - start_time,
+
         3
+
     )
 
     print(f"""

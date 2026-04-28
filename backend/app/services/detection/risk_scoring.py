@@ -30,6 +30,7 @@ def calculate_risk_score(
             ):
 
                 if (
+
                     event["post_1"]
                     in cluster["accounts"]
 
@@ -37,6 +38,7 @@ def calculate_risk_score(
 
                     event["post_2"]
                     in cluster["accounts"]
+
                 ):
 
                     timing_hits += 1
@@ -88,6 +90,32 @@ def calculate_risk_score(
         else:
 
             level = "LOW"
+
+        # VERY CRITICAL ESCALATION
+
+        for connection in cluster[
+            "connections"
+        ]:
+
+            if (
+
+                connection.get(
+                    "severity"
+                )
+
+                ==
+
+                "VERY_CRITICAL"
+
+            ):
+
+                level = (
+                    "VERY_CRITICAL"
+                )
+
+                score = 95
+
+                break
 
         results.append({
 
